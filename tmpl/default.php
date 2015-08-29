@@ -4,11 +4,14 @@
  * @subpackage   Modules
  * @author       Todor Iliev
  * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
- * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
 // no direct access
-defined('_JEXEC') or die; ?>
+defined('_JEXEC') or die;
+
+JFactory::getDocument()->addStyleSheet(JURI::root() . 'modules/mod_gamificationprofile/css/style.css');
+?>
 <div class="row">
     <?php if ($params->get("display_points", 0)) {?>
     <div class="col-xs-12 col-md-4 gfy-modprofile-points">
@@ -28,6 +31,8 @@ defined('_JEXEC') or die; ?>
         <h4><?php echo JText::_("MOD_GAMIFICATIONPROFILE_LEVEL");?></h4>
         <p class="gfy-modprofile-level-value"><?php echo $level->getLevel();?><p>
 
+    <?php if ($level->getId()) { ?>
+
         <?php if ($params->get("display_level_title", 0)) {?>
         <p><?php echo $level->getTitle(); ?></p>
         <?php }?>
@@ -36,6 +41,8 @@ defined('_JEXEC') or die; ?>
         <p><?php echo $level->getRank()->getTitle(); ?></p>
         <?php }?>
 
+    <?php }?>
+
     </div>
     <?php } ?>
 
@@ -43,12 +50,13 @@ defined('_JEXEC') or die; ?>
     <div class="col-xs-12 col-md-4 gfy-modprofile-rank">
         <h4><?php echo JText::_("MOD_GAMIFICATIONPROFILE_RANK");?></h4>
 
-        <?php if ($params->get("display_rank_picture", 0)) {?>
-            <img src="<?php echo $imagePath."/".$rank->getImage();?>" alt="<?php echo stripslashes(htmlentities($rank->getTitle(), ENT_QUOTES, "UTF-8"));?>" />
-        <?php }?>
+        <?php if ($rank->getId()) { ?>
+            <?php if ($params->get("display_rank_picture", 0)) {?>
+                <?php echo JHtml::_("gamification.rank", $rank, $imagePath, $params->get("display_rank_description", 0), $placeholders); ?>
+            <?php } ?>
 
-        <p><?php echo $rank->getTitle();?><p>
-
+            <p><?php echo $rank->getTitle();?><p>
+        <?php } ?>
     </div>
     <?php } ?>
 
@@ -61,7 +69,7 @@ defined('_JEXEC') or die; ?>
     <?php
         $badges_ = $badges->getBadges($params->get("badges_group_id"));
         foreach ($badges_ as $badge) {
-            echo JHtml::_("gamification.badge", $imagePath."/".$badge->getImage(), $badge->getTitle(), $badgeTooltip, $badge->getNote());
+            echo JHtml::_("gamification.badge", $badge, $imagePath, $params->get("display_badge_description", 0), $placeholders);
         }
     ?>
     </div>
@@ -72,7 +80,7 @@ defined('_JEXEC') or die; ?>
 <div class="row">
     <div class="col-xs-12 gfy-modprofile-progress">
         <h4><?php echo JText::_("MOD_GAMIFICATIONPROFILE_PROGRESS");?></h4>
-        <?php echo JHtml::_("gamification.progress", $progress, $params->get("display_badges_information", 0));?>
+        <?php echo JHtml::_("gamification.progress", $progress, $user->get("name"), $params->get("display_progressbar_tip", 0));?>
     </div>
 </div>
 <?php }?>
