@@ -20,7 +20,7 @@
         <folder>css</folder>
         <folder>language</folder>
         <folder>tmpl</folder>
-        <filename>index.html</filename>
+        
 		<filename module="mod_gamificationprofile">mod_gamificationprofile.php</filename>
 	</files>
 
