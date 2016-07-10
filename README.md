@@ -1,6 +1,6 @@
 Module - Gamification Profile
 ===========================
-( Version 2.0 )
+( Version 2.1 )
 - - -
 
 Gamification Profile is a module that displays user badges, levels, status, etc.
@@ -10,3 +10,6 @@ Gamification Profile is a module that displays user badges, levels, status, etc.
 
 Changelog
 ---------
+
+v2.1
+* Reworked to meet changes in v2.1 of the gamification platform.
